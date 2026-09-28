@@ -945,6 +945,74 @@ tr.rd-rowpend td:first-child{box-shadow:inset 3px 0 0 var(--bad)}
 .sku-type.main{background:var(--accent-bg);color:var(--accent-deep)}
 .sku-type.by{background:var(--surface2);color:var(--text2);border:1px solid var(--border2)}
 .skutype-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:12px}
+/* ── สรุปวางแผนกลาง (central planning weekly summary) ── */
+.cp-head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.cp-head h2{margin:0;font-size:20px}
+.cp-head .sub{margin:3px 0 0}
+.cp-tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.cp-seg{display:inline-flex;border:1px solid var(--border2);border-radius:10px;overflow:hidden;background:var(--surface)}
+.cp-seg button{border:none;background:transparent;color:var(--text2);font:inherit;font-size:12.5px;font-weight:600;padding:7px 12px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.cp-seg button+button{border-left:1px solid var(--border2)}
+.cp-seg button.on{background:var(--accent);color:#fff}
+.cp-btn{border:1px solid var(--border2);background:var(--surface);color:var(--text2);font:inherit;font-size:12.5px;font-weight:600;padding:7px 12px;border-radius:10px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.cp-btn:hover{border-color:var(--accent-dim);color:var(--accent)}
+.cp-filters{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.cp-frow{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.cp-frow .lb{font-size:12px;color:var(--text3);font-weight:600;min-width:44px}
+.cp-kpis{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin-bottom:14px}
+.cp-kpi{background:var(--glass);-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur);border:1px solid var(--glass-brd);border-radius:14px;padding:12px 14px;box-shadow:var(--shadow);border-top:3px solid var(--border2);min-width:0}
+.cp-kpi.accent{border-top-color:var(--accent)}.cp-kpi.bad{border-top-color:var(--bad)}.cp-kpi.warn{border-top-color:var(--warn)}.cp-kpi.ok{border-top-color:var(--ok)}
+.cp-kpi .lab{font-size:11.5px;color:var(--text3);font-weight:600;display:flex;align-items:center;gap:5px}
+.cp-kpi .val{font-size:22px;font-weight:800;line-height:1.15;margin-top:4px;color:var(--text);font-variant-numeric:tabular-nums;letter-spacing:-.02em;white-space:nowrap}
+.cp-kpi .val span{font-size:12px;font-weight:600;color:var(--text3)}
+.cp-kpi .s{font-size:11px;color:var(--text3);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cp-bar{display:inline-block;width:54px;height:6px;border-radius:99px;background:var(--surface2);border:1px solid var(--border);vertical-align:middle;margin-right:6px;overflow:hidden}
+.cp-bar>i{display:block;height:100%;background:var(--accent);border-radius:99px}
+.cp-bar.warn>i{background:var(--warn)}.cp-bar.bad>i{background:var(--bad)}
+.cp-grid{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:12px;align-items:start}
+.cp-tile{background:var(--glass);-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur);border:1px solid var(--glass-brd);border-radius:16px;padding:14px 16px;margin-bottom:12px;box-shadow:var(--shadow);min-width:0}
+.cp-tileh{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.cp-tileh h3{margin:0;font-size:15px;display:flex;align-items:center;gap:7px}
+.cp-tileh h3 i{color:var(--accent)}
+.cp-tbl{min-width:1040px}
+.cp-tbl th{cursor:pointer;user-select:none}
+.cp-tbl tr.cp-reg td{font-weight:700;background:var(--surface2);cursor:pointer}
+.cp-tbl tr.cp-reg td.stk{background:var(--surface2)}
+.cp-tbl tr.cp-fac td{cursor:pointer}
+.cp-tbl tr.cp-fac td.stk{padding-left:28px;color:var(--accent-deep);font-weight:500}
+.cp-tbl tr.cp-fac:hover td,.cp-tbl tr.cp-fac:hover td.stk{background:var(--accent-bg)}
+.cp-tbl tfoot td{font-weight:800;background:var(--surface2);border-top:2px solid var(--border2)}
+.cp-tbl tfoot td.stk{background:var(--surface2)}
+.cp-chev{display:inline-block;width:14px;color:var(--text3);transition:transform .15s}
+.cp-chev.open{transform:rotate(90deg)}
+.cp-vdp{font-weight:700}
+.cp-vdp.bad{color:var(--bad)}.cp-vdp.warn{color:var(--warn)}.cp-vdp.ok{color:var(--ok)}
+.cp-flag{display:inline-block;font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:999px;margin-left:4px;white-space:nowrap}
+.cp-flag.bad{background:var(--bad-bg);color:var(--bad)}.cp-flag.warn{background:var(--warn-bg);color:var(--warn)}.cp-flag.info{background:var(--info-bg);color:var(--info)}
+.cp-watch{display:flex;flex-direction:column;gap:6px;max-height:560px;overflow:auto}
+.cp-wi{display:flex;gap:10px;align-items:flex-start;padding:9px 10px;border:1px solid var(--border);border-radius:11px;background:var(--surface);cursor:pointer;transition:.12s}
+.cp-wi:hover{border-color:var(--accent-dim);background:var(--accent-bg)}
+.cp-wi .ic{width:28px;height:28px;flex-shrink:0;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px}
+.cp-wi .ic.bad{background:var(--bad-bg);color:var(--bad)}.cp-wi .ic.warn{background:var(--warn-bg);color:var(--warn)}.cp-wi .ic.info{background:var(--info-bg);color:var(--info)}
+.cp-wi .t{font-size:12.5px;font-weight:700;color:var(--text);line-height:1.3}
+.cp-wi .d{font-size:11.5px;color:var(--text2);margin-top:2px;line-height:1.4}
+.cp-empty{font-size:12.5px;color:var(--text3);padding:14px;text-align:center}
+.cp-mx td.cell{font-weight:700;text-align:center}
+.cp-note{font-size:11.5px;color:var(--text3);margin:8px 0 0}
+.cp-mhead{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;padding-right:40px;flex-wrap:wrap}
+.cp-mhead h3{margin:0;display:flex;align-items:center;gap:8px}
+.cp-mkpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:12px 0}
+.cp-mk{border:1px solid var(--border);border-radius:11px;padding:9px 11px;background:var(--surface)}
+.cp-mk .lab{font-size:11px;color:var(--text3);font-weight:600}
+.cp-mk .val{font-size:17px;font-weight:800;margin-top:2px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.cp-mk .s{font-size:10.5px;color:var(--text3);margin-top:1px}
+.cp-msec{margin-top:14px}
+.cp-msec h4{margin:0 0 4px;font-size:13.5px;display:flex;align-items:center;gap:6px}
+.cp-tbl2{min-width:760px;table-layout:auto}
+.cp-tbl2 th,.cp-tbl2 td{overflow:visible}
+.cp-tbl2 tr.on td{background:var(--accent-bg)}
+@media(max-width:1200px){.cp-kpis{grid-template-columns:repeat(3,minmax(0,1fr))}.cp-grid{grid-template-columns:1fr}}
+@media(max-width:640px){.cp-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.cp-mkpis{grid-template-columns:repeat(2,minmax(0,1fr))}.cp-kpi .val{font-size:19px}}
 .skutype-bar .iw-fchip{display:inline-flex;align-items:center;gap:6px}
 
 /* ===== glass redesign overrides ===== */
@@ -2508,6 +2576,234 @@ function renderDashboard(){
   initDashCharts();
   initSortables();
   initDayNav();
+}
+// ── สรุปวางแผนกลาง: สรุปทั้งสัปดาห์รายภาค → เจาะรายโรงงาน (ทีมวางแผนกลาง) ──
+const CP_CH=['Makro','Lotus','Wet Market','อื่นๆ'];
+const CP_RULES={vdpBad:70,vdpWarn:80,capFull:90,leftHigh:20};
+function cpLS(k,d){try{const v=localStorage.getItem('cp.'+k);return v==null?d:v;}catch(e){return d;}}
+function cpLSset(k,v){try{localStorage.setItem('cp.'+k,v);}catch(e){}}
+let cpRegion=cpLS('region','all'), cpDay='all', cpView='region', cpUnit=cpLS('unit','t'), cpOpen={}, cpSort={path:'heads',dir:'desc'}, cpGrpFilter='all', cpFacIdx=null;
+function cpBlank(){const ch={};CP_CH.forEach(c=>ch[c]={fc:0,qt:0});return{heads:0,max:0,min:0,wt:0,prod:0,fc:0,qt:0,short:0,left:0,mFc:0,mQt:0,bFc:0,bQt:0,ch};}
+function cpAdd(a,b){['heads','max','min','wt','prod','fc','qt','short','left','mFc','mQt','bFc','bQt'].forEach(k=>a[k]+=b[k]);CP_CH.forEach(c=>{a.ch[c].fc+=b.ch[c].fc;a.ch[c].qt+=b.ch[c].qt;});return a;}
+function cpVdp(fc,qt){return fc>0?qt/fc*100:null;}
+function cpScopeDays(){return cpDay==='all'?model.days.slice():[cpDay];}
+function cpWtKey(){return key(model.s1[0],'ปริมาณน้ำหนักรวม');}
+// รวมค่าตามโรงงาน สำหรับชุดวันที่เลือก · ของเหลือ = ปลายช่วง (ของเหลือยกเป็น buffer วันถัดไป จึงไม่บวกซ้ำรายวัน)
+function cpAgg(days){
+  const c1=model.c1,c2=model.c2,c3=model.c3,set=new Set(days),lastD=days[days.length-1],wK=cpWtKey();
+  const prodK=(model.supCols.find(x=>x.label==='Production')||{}).k;
+  const fac={};const get=n=>fac[n]||(fac[n]=cpBlank());
+  model.s1.forEach(r=>{const n=r[c1.name];if(!n||!set.has(r[c1.day]))return;const a=get(n);a.heads+=num(r[c1.heads]);a.max+=num(r[c1.max]);a.min+=num(r[c1.min]);if(wK)a.wt+=num(r[wK]);});
+  model.s2.forEach(r=>{const n=r[c2.name];if(!n||!set.has(r[c2.day]))return;const a=get(n);a.prod+=num(r[prodK]);if(r[c2.day]===lastD)a.left+=Math.max(0,num(r[c2.leftover]));});
+  model.s3.forEach(r=>{const n=r[c3.name];if(!n||!set.has(r[c3.day]))return;const a=get(n),fc=num(r[c3.fc3]),qt=num(r[c3.qt3]),ch=chanOf(r[c3.cust]);
+    a.fc+=fc;a.qt+=qt;a.short+=num(r[c3.shortOnly]);a.ch[ch].fc+=fc;a.ch[ch].qt+=qt;
+    if((r[c3.mainby]||'').includes('Main')){a.mFc+=fc;a.mQt+=qt;}else{a.bFc+=fc;a.bQt+=qt;}});
+  return fac;
+}
+// จุดที่ต้องดู — ใช้ทั้งในตารางและรายการด้านข้าง
+function cpFlags(a){
+  const out=[],v=cpVdp(a.fc,a.qt),cap=a.max?a.heads/a.max*100:0,room=Math.max(0,a.max-a.heads),leftPct=a.prod?a.left/a.prod*100:0;
+  if(v!=null&&v<CP_RULES.vdpWarn){
+    const lv=v<CP_RULES.vdpBad?'bad':'warn';
+    if(cap<CP_RULES.capFull&&room>0)out.push({lv,ic:'trending-down',tag:'VDP ต่ำ',t:'ตอบ FC ได้ '+nf.format(v)+'% แต่ cap ยังว่าง',d:'เพิ่มหัวเชือดได้อีกสูงสุด '+nf.format(room)+' ตัว · ขาด '+cpFmt(a.short)});
+    else out.push({lv,ic:'alert-triangle',tag:'VDP ต่ำ',t:'ตอบ FC ได้ '+nf.format(v)+'% และ cap เกือบเต็ม',d:'ต้องหาของจากโรงงานอื่น/โอนเข้า · ขาด '+cpFmt(a.short)});
+  }
+  if(a.max&&cap>=CP_RULES.capFull)out.push({lv:'info',ic:'gauge',tag:'เต็ม cap',t:'ใช้ cap '+nf.format(cap)+'%',d:'เพิ่มหัวเชือดได้อีกเพียง '+nf.format(room)+' ตัว'});
+  if(a.min&&a.heads<a.min)out.push({lv:'warn',ic:'arrow-down',tag:'ต่ำกว่า min',t:'หัวเชือดต่ำกว่า min '+nf.format(a.min-a.heads)+' ตัว',d:'เชือด '+nf.format(a.heads)+' · min '+nf.format(a.min)+' ตัว'});
+  if(leftPct>=CP_RULES.leftHigh&&a.left>0)out.push({lv:'warn',ic:'box',tag:'เหลือสูง',t:'ของเหลือปลายช่วง '+nf.format(leftPct)+'% ของผลิต',d:'เหลือ '+cpFmt(a.left)+' · เสนอเป็นสินค้าผลักดัน'});
+  return out;
+}
+function cpU(){return cpUnit==='t'?'ตัน':'kg';}
+function cpNum(kg){return cpUnit==='t'?nf1.format(kg/1000):nf.format(Math.round(kg));}
+function cpFmt(kg){return cpNum(kg)+' '+cpU();}
+function cpVdpHtml(v){if(v==null)return '<span class="sub">—</span>';const c=v<CP_RULES.vdpBad?'bad':v<CP_RULES.vdpWarn?'warn':'ok';return '<span class="cp-vdp '+c+'">'+nf1.format(v)+'%</span>';}
+function cpCapHtml(a){if(!a.max)return '<span class="sub">—</span>';const p=a.heads/a.max*100,c=p>=CP_RULES.capFull?'warn':(a.min&&a.heads<a.min)?'bad':'';return '<span class="cp-bar '+c+'"><i style="width:'+Math.min(100,p).toFixed(0)+'%"></i></span>'+nf.format(p)+'%';}
+function cpScopeLabel(){
+  const wk=model.s1[0]&&model.s1[0].weekNo!=null?'WK'+model.s1[0].weekNo:'';
+  const d=model.days,fmt=x=>{const t=new Date(x+'T00:00:00');return isNaN(t)?dlabel(x):TH_DOW[t.getDay()]+' '+t.getDate()+' '+TH_MON[t.getMonth()];};
+  return (wk?wk+' · ':'')+(cpDay==='all'?'ทั้งสัปดาห์ '+fmt(d[0])+' – '+fmt(d[d.length-1]):fmt(cpDay));
+}
+function cpRegions(){return [...new Set(model.factories.map(f=>f.region||'ไม่ระบุ'))].sort((a,b)=>String(a).localeCompare(String(b),'th'));}
+function cpFacRows(fac){return model.factories.map((f,i)=>Object.assign({idx:i,name:f.name,region:f.region||'ไม่ระบุ'},fac[f.name]||cpBlank())).filter(r=>cpRegion==='all'||r.region===cpRegion);}
+function cpSortVal(r,p){if(p==='name')return r.name;if(p==='vdp')return cpVdp(r.fc,r.qt)??-1;if(p==='cap')return r.max?r.heads/r.max:0;if(p==='kgh')return r.heads?r.wt/r.heads:0;return r[p]||0;}
+function cpSortRows(rows){const p=cpSort.path,d=cpSort.dir==='asc'?1:-1;return rows.sort((a,b)=>{const x=cpSortVal(a,p),y=cpSortVal(b,p);return (typeof x==='string'?x.localeCompare(y,'th'):x-y)*d;});}
+function cpSetSort(p){if(cpSort.path===p)cpSort.dir=cpSort.dir==='desc'?'asc':'desc';else{cpSort.path=p;cpSort.dir=p==='name'?'asc':'desc';}renderCentral();}
+function cpSet(k,v){if(k==='region'){cpRegion=v;cpLSset('region',v);cpOpen={};}else if(k==='day')cpDay=v;else if(k==='view')cpView=v;else if(k==='unit'){cpUnit=v;cpLSset('unit',v);}else if(k==='grp')cpGrpFilter=v;renderCentral();}
+function cpToggleReg(i){const r=cpRegions()[i];cpOpen[r]=!cpOpen[r];renderCentral();}
+function cpExpandAll(on){cpRegions().forEach(r=>cpOpen[r]=on);renderCentral();}
+
+function renderCentral(){
+  const host=document.getElementById('cp-body');if(!host||!model)return;
+  if(cpRegion!=='all'&&!cpRegions().includes(cpRegion))cpRegion='all';
+  if(cpDay!=='all'&&!model.days.includes(cpDay))cpDay='all';
+  const fac=cpAgg(cpScopeDays()),rows=cpFacRows(fac),T=rows.reduce((a,r)=>cpAdd(a,r),cpBlank());
+  const regs=cpRegions(),nDays=cpScopeDays().length;
+  const pill=(on,lb,js)=>`<span class="iw-fchip${on?' on':''}" onclick="${js}">${lb}</span>`;
+  const dayLb=d=>{const t=new Date(d+'T00:00:00');return isNaN(t)?dlabel(d):TH_DOW[t.getDay()]+' '+t.getDate();};
+  const v=cpVdp(T.fc,T.qt),vM=cpVdp(T.mFc,T.mQt),vB=cpVdp(T.bFc,T.bQt),cap=T.max?T.heads/T.max*100:0;
+  const scope=cpRegion==='all'?'ทุกภาค':'ภาค'+cpRegion;
+  const kpi=(cls,ic,lab,val,s)=>`<div class="cp-kpi ${cls}"><div class="lab"><i class="ti ti-${ic}"></i> ${lab}</div><div class="val">${val}</div><div class="s">${s}</div></div>`;
+  const kpis=`<div class="cp-kpis">
+    ${kpi('accent','meat','หัวเชือดรวม',nf.format(T.heads)+' <span>ตัว</span>','เฉลี่ย '+nf.format(Math.round(T.heads/nDays))+' ตัว/วัน · ใช้ cap '+nf.format(cap)+'%')}
+    ${kpi('','package','น้ำหนักหมูเข้า',cpNum(T.wt)+' <span>'+cpU()+'</span>','เฉลี่ย '+nf1.format(T.heads?T.wt/T.heads:0)+' kg/ตัว · ผลิต '+cpFmt(T.prod))}
+    ${kpi('','users-group','Forecast (FC)',cpNum(T.fc)+' <span>'+cpU()+'</span>','Main '+cpNum(T.mFc)+' · By '+cpNum(T.bFc))}
+    ${kpi('ok','clipboard-list','Quota (QT)',cpNum(T.qt)+' <span>'+cpU()+'</span>','Main '+cpNum(T.mQt)+' · By '+cpNum(T.bQt))}
+    ${kpi(v!=null&&v<CP_RULES.vdpWarn?'warn':'accent','percentage','%VDP (QT÷FC)',v==null?'—':nf1.format(v)+' <span>%</span>','Main '+(vM==null?'—':nf1.format(vM)+'%')+' · By '+(vB==null?'—':nf1.format(vB)+'%'))}
+    ${kpi('bad','alert-triangle','ขาด / เหลือ','<span style="color:var(--bad);font-size:inherit;font-weight:inherit">'+cpNum(T.short)+'</span> / <span style="color:var(--warn);font-size:inherit;font-weight:inherit">'+cpNum(T.left)+'</span> <span>'+cpU()+'</span>','ขาด = FC−QT · เหลือ = ปลายช่วง')}
+  </div>`;
+  // จุดที่ต้องดู
+  const lvRank={bad:0,warn:1,info:2};const watch=[];
+  rows.forEach(r=>cpFlags(r).forEach(f=>watch.push(Object.assign({r},f))));
+  watch.sort((a,b)=>lvRank[a.lv]-lvRank[b.lv]||b.r.short-a.r.short);
+  const watchHtml=watch.length?watch.map(w=>`<div class="cp-wi" onclick="cpOpenFac(${w.r.idx})"><div class="ic ${w.lv}"><i class="ti ti-${w.ic}"></i></div><div style="min-width:0"><div class="t">${moShort?moShort(w.r.name):w.r.name}</div><div class="d"><b>${w.t}</b><br>${w.d}</div></div></div>`).join(''):'<div class="cp-empty"><i class="ti ti-circle-check"></i> ไม่มีจุดที่ต้องดูในขอบเขตนี้</div>';
+  let main='';
+  if(cpView==='region')main=cpRegionTable(rows,T);
+  else if(cpView==='channel')main=cpChannelView(rows,T);
+  else main=cpGroupView();
+  host.innerHTML=`
+  <div class="cp-head">
+    <div><h2>สรุปแผนสัปดาห์ · ${scope}</h2><p class="sub">${cpScopeLabel()} · ${rows.length} โรงงาน · ข้อมูลจากแผน AI ล่าสุด</p></div>
+    <div class="cp-tools">
+      <div class="cp-seg" role="group" aria-label="หน่วย"><button class="${cpUnit==='t'?'on':''}" onclick="cpSet('unit','t')">ตัน</button><button class="${cpUnit==='kg'?'on':''}" onclick="cpSet('unit','kg')">kg</button></div>
+      <button class="cp-btn" onclick="cpExportCsv()"><i class="ti ti-file-spreadsheet"></i> Export Excel (CSV)</button>
+    </div>
+  </div>
+  <div class="cp-filters">
+    <div class="cp-frow"><span class="lb">ภาค</span>${pill(cpRegion==='all','ทุกภาค',"cpSet('region','all')")}${regs.map(r=>pill(cpRegion===r,r,`cpSet('region','${dashEsc(r)}')`)).join('')}</div>
+    <div class="cp-frow"><span class="lb">ช่วง</span>${pill(cpDay==='all','ทั้งสัปดาห์',"cpSet('day','all')")}${model.days.map(d=>pill(cpDay===d,dayLb(d),`cpSet('day','${d}')`)).join('')}</div>
+  </div>
+  ${kpis}
+  <div class="cp-grid">
+    <div class="cp-tile">
+      <div class="cp-tileh"><h3><i class="ti ti-table"></i> ${cpView==='region'?'รายภาค → รายโรงงาน':cpView==='channel'?'แยกช่องทางขาย':'แยกกลุ่มสินค้า'}</h3>
+        <div class="cp-seg" role="group" aria-label="มุมมอง"><button class="${cpView==='region'?'on':''}" onclick="cpSet('view','region')"><i class="ti ti-map-2"></i> ภาค/โรงงาน</button><button class="${cpView==='channel'?'on':''}" onclick="cpSet('view','channel')"><i class="ti ti-users-group"></i> ช่องทาง</button><button class="${cpView==='group'?'on':''}" onclick="cpSet('view','group')"><i class="ti ti-layout-grid"></i> กลุ่มสินค้า</button></div>
+      </div>
+      ${main}
+    </div>
+    <div class="cp-tile"><div class="cp-tileh"><h3><i class="ti ti-eye"></i> จุดที่ต้องดู</h3><span class="chip ${watch.some(w=>w.lv==='bad')?'bad':watch.length?'warn':'ok'}">${watch.length} รายการ</span></div>
+      <p class="cp-note" style="margin:0 0 8px">คลิกเพื่อเจาะดูโรงงาน · VDP &lt; ${CP_RULES.vdpWarn}% · cap ≥ ${CP_RULES.capFull}% · ต่ำกว่า min · เหลือ ≥ ${CP_RULES.leftHigh}% ของผลิต</p>
+      <div class="cp-watch">${watchHtml}</div>
+    </div>
+  </div>`;
+}
+function cpRegionTable(rows,T){
+  const regs=cpRegions().filter(r=>cpRegion==='all'||r===cpRegion);
+  const arrow=p=>cpSort.path===p?(cpSort.dir==='asc'?' ▲':' ▼'):'';
+  const u=cpU();
+  const cols=[['heads','หัวเชือด (ตัว)'],['cap','ใช้ cap'],['wt','น้ำหนักเข้า ('+u+')'],['kgh','kg/ตัว'],['fc','FC ('+u+')'],['qt','QT ('+u+')'],['vdp','%VDP'],['short','ขาด ('+u+')'],['left','เหลือ ('+u+')']];
+  const head='<tr><th class="stk" onclick="cpSetSort(\'name\')" style="min-width:230px">ภาค / โรงงาน'+arrow('name')+'</th>'+cols.map(c=>`<th onclick="cpSetSort('${c[0]}')">${c[1]}${arrow(c[0])}</th>`).join('')+'<th style="text-align:left;cursor:default">จุดที่ต้องดู</th></tr>';
+  const cells=a=>`<td>${nf.format(a.heads)}</td><td>${cpCapHtml(a)}</td><td>${cpNum(a.wt)}</td><td>${a.heads?nf1.format(a.wt/a.heads):'—'}</td><td>${cpNum(a.fc)}</td><td>${cpNum(a.qt)}</td><td>${cpVdpHtml(cpVdp(a.fc,a.qt))}</td><td class="${a.short>0?'neg':''}">${cpNum(a.short)}</td><td>${cpNum(a.left)}</td>`;
+  const single=cpRegion!=='all';
+  const allRegs=cpRegions();
+  const regAgg=regs.map(rg=>{const fr=rows.filter(r=>r.region===rg);return{rg,fr,a:fr.reduce((x,r)=>cpAdd(x,r),cpBlank())};});
+  if(cpSort.path!=='name')regAgg.sort((x,y)=>(cpSortVal(x.a,cpSort.path)-cpSortVal(y.a,cpSort.path))*(cpSort.dir==='asc'?1:-1));
+  let body='';
+  regAgg.forEach(({rg,fr,a})=>{
+    const open=single||cpOpen[rg];const ri=allRegs.indexOf(rg);
+    const nFlag=fr.filter(r=>cpFlags(r).length).length;
+    body+=`<tr class="cp-reg" onclick="${single?'':'cpToggleReg('+ri+')'}"><td class="stk">${single?'':'<span class="cp-chev'+(open?' open':'')+'"><i class="ti ti-chevron-right"></i></span> '}${rg} <span class="sub" style="font-weight:500">· ${fr.length} โรงงาน</span></td>${cells(a)}<td style="text-align:left">${nFlag?'<span class="cp-flag warn">'+nFlag+' โรงงาน</span>':'<span class="sub">—</span>'}</td></tr>`;
+    if(open)cpSortRows(fr.slice()).forEach(r=>{
+      const fl=cpFlags(r);
+      body+=`<tr class="cp-fac" onclick="cpOpenFac(${r.idx})" title="คลิกเพื่อเจาะดูโรงงาน"><td class="stk">${r.name}</td>${cells(r)}<td style="text-align:left">${fl.map(f=>'<span class="cp-flag '+f.lv+'">'+f.tag+'</span>').join('')||'<span class="sub">—</span>'}</td></tr>`;
+    });
+  });
+  const foot=`<tr><td class="stk">รวม${single?'ภาค'+cpRegion:'ทุกภาค'}</td>${cells(T)}<td></td></tr>`;
+  return `<div style="display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap"><span class="sub" style="font-size:12px">คลิกแถวภาคเพื่อกาง · คลิกโรงงานเพื่อเจาะรายละเอียด · คลิกหัวตารางเพื่อเรียง</span>${single?'':'<span style="display:flex;gap:6px"><button class="cp-btn" onclick="cpExpandAll(true)"><i class="ti ti-plus"></i> กางทั้งหมด</button><button class="cp-btn" onclick="cpExpandAll(false)"><i class="ti ti-minus"></i> ยุบ</button></span>'}</div>
+  <div class="tblwrap"><table class="tbl wide cp-tbl"><thead>${head}</thead><tbody>${body}</tbody><tfoot>${foot}</tfoot></table></div>`;
+}
+function cpChannelView(rows,T){
+  const u=cpU();
+  const chRow=c=>{const x=T.ch[c],v=cpVdp(x.fc,x.qt),sh=T.fc?x.fc/T.fc*100:0;return `<tr><td class="stk">${CH_LABEL[c]||c}</td><td>${cpNum(x.fc)}</td><td>${nf.format(sh)}%</td><td>${cpNum(x.qt)}</td><td>${cpVdpHtml(v)}</td><td class="${x.fc-x.qt>0?'neg':''}">${cpNum(Math.max(0,x.fc-x.qt))}</td></tr>`;};
+  const t1=`<div class="tblwrap"><table class="tbl cp-tbl2" style="min-width:560px"><thead><tr><th class="stk">ช่องทาง</th><th>FC (${u})</th><th>สัดส่วน FC</th><th>QT (${u})</th><th>%VDP</th><th>ขาด (${u})</th></tr></thead><tbody>${CP_CH.map(chRow).join('')}</tbody>
+    <tfoot><tr><td class="stk">รวม</td><td>${cpNum(T.fc)}</td><td>100%</td><td>${cpNum(T.qt)}</td><td>${cpVdpHtml(cpVdp(T.fc,T.qt))}</td><td class="neg">${cpNum(T.short)}</td></tr></tfoot></table></div>`;
+  // ภาค × ช่องทาง (หรือ โรงงาน × ช่องทาง เมื่อเลือกภาคเดียว)
+  const single=cpRegion!=='all';
+  const mRows=single?cpSortRows(rows.slice()).map(r=>({lb:r.name,a:r,idx:r.idx})):cpRegions().map(rg=>({lb:rg,a:rows.filter(r=>r.region===rg).reduce((x,r)=>cpAdd(x,r),cpBlank())}));
+  const cell=x=>{const v=cpVdp(x.fc,x.qt);if(v==null)return '<td class="cell"><span class="sub">—</span></td>';const bg=v<CP_RULES.vdpBad?'var(--bad-bg)':v<CP_RULES.vdpWarn?'var(--warn-bg)':'var(--ok-bg)';return `<td class="cell" style="background:${bg}" title="FC ${cpFmt(x.fc)} · QT ${cpFmt(x.qt)}">${cpVdpHtml(v)}</td>`;};
+  const t2=`<div class="tblwrap"><table class="tbl cp-tbl2 cp-mx" style="min-width:620px"><thead><tr><th class="stk">${single?'โรงงาน':'ภาค'}</th>${CP_CH.map(c=>`<th style="text-align:center">${CH_LABEL[c]||c}</th>`).join('')}<th style="text-align:center">รวม</th></tr></thead><tbody>${mRows.map(m=>`<tr${m.idx!=null?` style="cursor:pointer" onclick="cpOpenFac(${m.idx})"`:''}><td class="stk">${m.lb}</td>${CP_CH.map(c=>cell(m.a.ch[c])).join('')}${cell(m.a)}</tr>`).join('')}</tbody></table></div>`;
+  return t1+`<h4 style="margin:16px 0 0;font-size:13.5px">%VDP ${single?'รายโรงงาน':'รายภาค'} × ช่องทาง</h4><p class="cp-note" style="margin:2px 0 0">ช่องสี: แดง &lt; ${CP_RULES.vdpBad}% · เหลือง &lt; ${CP_RULES.vdpWarn}% · เขียว ≥ ${CP_RULES.vdpWarn}% · ชี้ที่ช่องเพื่อดู FC/QT</p>`+t2;
+}
+// กลุ่มสินค้า (ProductForPlan19) — โครงเดียวกับชีท Balance ใน Excel
+function cpGroupAgg(facNames,days){
+  const c2=model.c2,c3=model.c3,set=new Set(days),lastD=days[days.length-1],fs=facNames?new Set(facNames):null;
+  const prodK=(model.supCols.find(x=>x.label==='Production')||{}).k;
+  const g={};const get=k=>{if(!g[k]){const ch={};CP_CH.forEach(c=>ch[c]={fc:0,qt:0});g[k]={grp:k,main:(model.mainBy[k]||'').includes('Main'),prod:0,fc:0,qt:0,short:0,left:0,ch};}return g[k];};
+  model.s2.forEach(r=>{const n=r[c2.name];if(!n||(fs&&!fs.has(n))||!set.has(r[c2.day]))return;const a=get(r[c2.sku]||'อื่นๆ');a.prod+=num(r[prodK]);if(r[c2.day]===lastD)a.left+=Math.max(0,num(r[c2.leftover]));});
+  model.s3.forEach(r=>{const n=r[c3.name];if(!n||(fs&&!fs.has(n))||!set.has(r[c3.day]))return;const a=get(r[c3.sku]||'อื่นๆ'),fc=num(r[c3.fc3]),qt=num(r[c3.qt3]),ch=chanOf(r[c3.cust]);
+    a.fc+=fc;a.qt+=qt;a.short+=num(r[c3.shortOnly]);a.ch[ch].fc+=fc;a.ch[ch].qt+=qt;if((r[c3.mainby]||'').includes('Main'))a.main=true;});
+  return Object.values(g).filter(a=>a.fc||a.prod||a.qt).sort((a,b)=>(b.main-a.main)||(b.fc-a.fc));
+}
+function cpGroupTable(list){
+  const u=cpU();
+  const nM=list.filter(a=>a.main).length,nB=list.length-nM;
+  const shown=list.filter(a=>cpGrpFilter==='all'||(cpGrpFilter==='main'?a.main:!a.main));
+  const chip=(k,lb)=>`<span class="iw-fchip${cpGrpFilter===k?' on':''}" onclick="cpSetGrp('${k}')">${lb}</span>`;
+  const rowsH=shown.map(a=>`<tr><td class="stk">${a.grp}</td><td style="text-align:center"><span class="sku-type ${a.main?'main':'by'}">${a.main?'Main':'By'}</span></td><td>${cpNum(a.prod)}</td>${CP_CH.map(c=>`<td>${cpNum(a.ch[c].fc)}</td>`).join('')}<td style="font-weight:700">${cpNum(a.fc)}</td>${CP_CH.map(c=>`<td>${cpNum(a.ch[c].qt)}</td>`).join('')}<td style="font-weight:700">${cpNum(a.qt)}</td><td>${cpVdpHtml(cpVdp(a.fc,a.qt))}</td><td class="${a.short>0?'neg':''}">${cpNum(a.short)}</td><td>${cpNum(a.left)}</td></tr>`).join('');
+  const chH=CP_CH.map(c=>`<th>${CH_LABEL[c]||c}</th>`).join('');
+  return `<div class="cp-frow" style="margin:4px 0">${chip('all','ทั้งหมด ('+list.length+')')}${chip('main','<span class="sku-type main">Main</span> '+nM)}${chip('by','<span class="sku-type by">By</span> '+nB)}</div>
+  <div class="tblwrap" style="max-height:62vh;overflow:auto"><table class="tbl wide cp-tbl2" style="min-width:1180px"><thead>
+    <tr><th class="stk" rowspan="2" style="vertical-align:bottom">กลุ่มสินค้า</th><th rowspan="2" style="vertical-align:bottom;text-align:center">ประเภท</th><th rowspan="2" style="vertical-align:bottom">ผลิต (${u})</th><th colspan="5" style="text-align:center;background:var(--info-bg);color:var(--info)">FC (${u})</th><th colspan="5" style="text-align:center;background:var(--ok-bg);color:var(--ok)">QT (${u})</th><th rowspan="2" style="vertical-align:bottom">%VDP</th><th rowspan="2" style="vertical-align:bottom">ขาด</th><th rowspan="2" style="vertical-align:bottom">เหลือ</th></tr>
+    <tr>${chH}<th>รวม</th>${chH}<th>รวม</th></tr></thead><tbody>${rowsH||'<tr><td colspan="16" class="sub" style="text-align:center">ไม่มีข้อมูล</td></tr>'}</tbody></table></div>`;
+}
+function cpSetGrp(k){cpGrpFilter=k;if(cpFacIdx!=null&&document.getElementById('overlay').classList.contains('show'))cpOpenFac(cpFacIdx);else renderCentral();}
+function cpGroupView(){
+  const names=cpRegion==='all'?null:model.factories.filter(f=>(f.region||'ไม่ระบุ')===cpRegion).map(f=>f.name);
+  return `<p class="cp-note" style="margin:0 0 4px">เรียง Main ก่อน แล้วตาม FC มากไปน้อย · ใช้ดูว่ากลุ่มไหนขาด/เหลือ เพื่อตั้งต้น balance และเลือกสินค้าผลักดัน</p>`+cpGroupTable(cpGroupAgg(names,cpScopeDays()));
+}
+// ── เจาะรายโรงงาน ──
+function cpOpenFac(idx){
+  const f=model.factories[idx];if(!f)return;cpFacIdx=idx;
+  const days=cpScopeDays(),facAll=cpAgg(days),a=facAll[f.name]||cpBlank(),u=cpU();
+  const v=cpVdp(a.fc,a.qt),fl=cpFlags(a);
+  // ไล่ดูโรงงานถัดไป/ก่อนหน้าในขอบเขตภาคเดียวกับตาราง
+  const peers=cpSortRows(cpFacRows(facAll)).map(r=>r.idx),pi=peers.indexOf(idx);
+  const prev=pi>0?peers[pi-1]:null,next=pi>=0&&pi<peers.length-1?peers[pi+1]:null;
+  const mk=(lab,val,s)=>`<div class="cp-mk"><div class="lab">${lab}</div><div class="val">${val}</div><div class="s">${s||''}</div></div>`;
+  // รายวัน (แสดงทุกวันของสัปดาห์ ไฮไลต์วันที่เลือก)
+  const dA=model.days.map(d=>cpAgg([d])[f.name]||cpBlank());
+  const dayRows=model.days.map((d,di)=>{const x=dA[di];
+    const t=new Date(d+'T00:00:00'),lb=isNaN(t)?dlabel(d):DOWFULL[(t.getDay()+6)%7]+' '+t.getDate()+' '+TH_MON[t.getMonth()];
+    return `<tr class="${cpDay===d?'on':''}"><td class="stk">${lb}</td><td>${nf.format(x.heads)}</td><td>${x.max?nf.format(x.min)+'–'+nf.format(x.max):'—'}</td><td>${cpCapHtml(x)}</td><td>${cpNum(x.wt)}</td><td>${cpNum(x.prod)}</td><td>${cpNum(x.fc)}</td><td>${cpNum(x.qt)}</td><td>${cpVdpHtml(cpVdp(x.fc,x.qt))}</td><td class="${x.short>0?'neg':''}">${cpNum(x.short)}</td><td>${cpNum(x.left)}</td></tr>`;}).join('');
+  const W2=dA.reduce((s,x)=>cpAdd(s,x),cpBlank());W2.left=dA[dA.length-1].left;
+  const dayTbl=`<div class="tblwrap"><table class="tbl cp-tbl2" style="min-width:900px"><thead><tr><th class="stk">วัน</th><th>หัวเชือด</th><th>min–max</th><th>ใช้ cap</th><th>น้ำหนักเข้า</th><th>ผลิต</th><th>FC</th><th>QT</th><th>%VDP</th><th>ขาด</th><th>เหลือ</th></tr></thead><tbody>${dayRows}</tbody>
+    <tfoot><tr><td class="stk">รวมสัปดาห์</td><td>${nf.format(W2.heads)}</td><td>${nf.format(W2.min)}–${nf.format(W2.max)}</td><td>${cpCapHtml(W2)}</td><td>${cpNum(W2.wt)}</td><td>${cpNum(W2.prod)}</td><td>${cpNum(W2.fc)}</td><td>${cpNum(W2.qt)}</td><td>${cpVdpHtml(cpVdp(W2.fc,W2.qt))}</td><td class="neg">${cpNum(W2.short)}</td><td>${cpNum(W2.left)}</td></tr></tfoot></table></div>`;
+  const chTbl=`<div class="tblwrap"><table class="tbl cp-tbl2" style="min-width:520px"><thead><tr><th class="stk">ช่องทาง</th><th>FC (${u})</th><th>QT (${u})</th><th>%VDP</th><th>ขาด (${u})</th></tr></thead><tbody>${CP_CH.map(c=>{const x=a.ch[c];return `<tr><td class="stk">${CH_LABEL[c]||c}</td><td>${cpNum(x.fc)}</td><td>${cpNum(x.qt)}</td><td>${cpVdpHtml(cpVdp(x.fc,x.qt))}</td><td class="${x.fc-x.qt>0?'neg':''}">${cpNum(Math.max(0,x.fc-x.qt))}</td></tr>`;}).join('')}</tbody></table></div>`;
+  const nav=(i,ic,lb)=>{const icon=ic==='chevron-left'?'<i class="ti ti-chevron-right" style="transform:scaleX(-1)"></i>':'<i class="ti ti-'+ic+'"></i>';return i==null?`<button class="cp-btn" disabled style="opacity:.4;cursor:default">${icon} ${lb}</button>`:`<button class="cp-btn" onclick="cpOpenFac(${i})" title="${model.factories[i].name}">${icon} ${lb}</button>`;};
+  const m=document.getElementById('modal');
+  m.style.maxWidth='min(1180px,96vw)';m.style.width='96vw';m.style.maxHeight='94vh';m.style.overflow='auto';m.style.position='relative';
+  m.innerHTML=`<button onclick="closeOverlay()" aria-label="ปิด" style="position:absolute;top:12px;right:12px;width:32px;height:32px;border:none;border-radius:8px;background:var(--surface2);color:var(--text2);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center"><i class="ti ti-x"></i></button>
+    <div class="cp-mhead"><div><h3><i class="ti ti-building-factory-2" style="color:var(--accent)"></i> ${f.name}</h3><p class="sub" style="margin:3px 0 0"><span class="chip info">${f.region||'ไม่ระบุ'}</span> · ${cpScopeLabel()}</p></div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">${nav(prev,'chevron-left','ก่อนหน้า')}${nav(next,'chevron-right','ถัดไป')}<button class="cp-btn" onclick="showFacSkuModal('${dashEsc(f.name)}','${cpDay}')"><i class="ti ti-list-details"></i> ดูราย SKU</button></div></div>
+    ${fl.length?`<div style="display:flex;flex-direction:column;gap:6px;margin-top:10px">${fl.map(x=>`<div class="cp-wi" style="cursor:default"><div class="ic ${x.lv}"><i class="ti ti-${x.ic}"></i></div><div><div class="t">${x.t}</div><div class="d">${x.d}</div></div></div>`).join('')}</div>`:''}
+    <div class="cp-mkpis">
+      ${mk('หัวเชือด',nf.format(a.heads)+' ตัว','min '+nf.format(a.min)+' · max '+nf.format(a.max))}
+      ${mk('ใช้ cap',a.max?nf.format(a.heads/a.max*100)+'%':'—','ว่างอีก '+nf.format(Math.max(0,a.max-a.heads))+' ตัว')}
+      ${mk('น้ำหนักหมูเข้า',cpFmt(a.wt),'เฉลี่ย '+nf1.format(a.heads?a.wt/a.heads:0)+' kg/ตัว')}
+      ${mk('ผลิตได้',cpFmt(a.prod),a.wt?'yield '+nf1.format(a.prod/a.wt*100)+'%':'')}
+      ${mk('FC',cpFmt(a.fc),'Main '+cpNum(a.mFc)+' · By '+cpNum(a.bFc))}
+      ${mk('QT',cpFmt(a.qt),'Main '+cpNum(a.mQt)+' · By '+cpNum(a.bQt))}
+      ${mk('%VDP',v==null?'—':cpVdpHtml(v),'Main '+(cpVdp(a.mFc,a.mQt)==null?'—':nf1.format(cpVdp(a.mFc,a.mQt))+'%')+' · By '+(cpVdp(a.bFc,a.bQt)==null?'—':nf1.format(cpVdp(a.bFc,a.bQt))+'%'))}
+      ${mk('ขาด / เหลือ','<span class="neg">'+cpNum(a.short)+'</span> / '+cpNum(a.left)+' <span class="sub" style="font-size:11px">'+u+'</span>','เหลือ = ปลายช่วง')}
+    </div>
+    <div class="cp-msec"><h4><i class="ti ti-calendar-stats" style="color:var(--accent)"></i> รายวันทั้งสัปดาห์ (${u})</h4>${dayTbl}</div>
+    <div class="cp-msec"><h4><i class="ti ti-users-group" style="color:var(--accent)"></i> แยกช่องทาง</h4>${chTbl}</div>
+    <div class="cp-msec"><h4><i class="ti ti-layout-grid" style="color:var(--accent)"></i> แยกกลุ่มสินค้า</h4>${cpGroupTable(cpGroupAgg([f.name],days))}</div>`;
+  document.getElementById('overlay').classList.add('show');
+  m.scrollTop=0;
+}
+// Export ตารางตามขอบเขตปัจจุบัน — เปิดใน Excel ได้ (UTF-8 BOM)
+function cpExportCsv(){
+  if(!model)return;
+  const days=cpScopeDays(),fac=cpAgg(days),rows=cpSortRows(cpFacRows(fac));
+  const r1=x=>Math.round(x);
+  const hd=['ภาค','โรงงาน','หัวเชือด (ตัว)','min (ตัว)','max (ตัว)','ใช้ cap %','น้ำหนักเข้า (kg)','kg/ตัว','ผลิต (kg)','FC (kg)','QT (kg)','%VDP','ขาด (kg)','เหลือปลายช่วง (kg)'].concat(CP_CH.map(c=>'FC '+c+' (kg)'),CP_CH.map(c=>'QT '+c+' (kg)'),['จุดที่ต้องดู']);
+  const lines=[hd];
+  rows.forEach(r=>{const v=cpVdp(r.fc,r.qt);lines.push([r.region,r.name,r.heads,r.min,r.max,r.max?(r.heads/r.max*100).toFixed(1):'',r1(r.wt),r.heads?(r.wt/r.heads).toFixed(1):'',r1(r.prod),r1(r.fc),r1(r.qt),v==null?'':v.toFixed(1),r1(r.short),r1(r.left)].concat(CP_CH.map(c=>r1(r.ch[c].fc)),CP_CH.map(c=>r1(r.ch[c].qt)),[cpFlags(r).map(f=>f.tag).join(' / ')]));});
+  const csv='﻿'+lines.map(l=>l.map(x=>{const s=String(x==null?'':x);return /[",\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s;}).join(',')).join('\r\n');
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
+  a.download='สรุปวางแผนกลาง_'+(cpRegion==='all'?'ทุกภาค':cpRegion)+'_'+(cpDay==='all'?'ทั้งสัปดาห์':cpDay)+'.csv';
+  document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500);
+  toast('Export แล้ว — เปิดด้วย Excel ได้เลย');
 }
 function initDashCharts(){
   if(!model)return;const dd=document.getElementById('dDay');if(!dd)return;
@@ -4425,7 +4721,7 @@ const SPEC_HOL={"โรงชำแหละสุกรแปดริ้ว": 
   }
   let lastDowForTab=null;
   function defaultTabFor(phase){
-    return 'motion';
+    return curRole==='central'?'central':'motion';
   }
   function renderOverview(){
     renderStatus();
@@ -4490,13 +4786,14 @@ const SPEC_HOL={"โรงชำแหละสุกรแปดริ้ว": 
     return '<div class="rd-input-wrap">'+side+main+'</div>';
   }
   const RESULT_TABS=[
+    {k:'central',lb:'สรุปวางแผนกลาง',ic:'layout-dashboard',roles:['central','admin']},
     {k:'motion',lb:'ดูแผนการผลิต',ic:'sparkles'},
     {k:'result',lb:'ปรับกำลังการผลิต',ic:'adjustments-alt'}
   ];
   function visibleTabs(phase){
     phase=phase||rdPhase();
     // To-do/input tab only exists Mon-Wed (the data-collection window, cutoff Wed 16:00)
-    return RESULT_TABS.filter(t=>t.k!=='input'||phase==='input');
+    return RESULT_TABS.filter(t=>(t.k!=='input'||phase==='input')&&(!t.roles||t.roles.includes(curRole)));
   }
   function tabStripHtml(phase){
     const tabs=visibleTabs(phase).map(t=>'<div class="rd-tab'+(t.k===rdTab?' on':'')+'" onclick="IW.tab(\''+t.k+'\')"><i class="ti ti-'+t.ic+'"></i> '+t.lb+'</div>').join('');
@@ -4520,6 +4817,10 @@ const SPEC_HOL={"โรงชำแหละสุกรแปดริ้ว": 
     }else if(k==='workspace'){
       panel.innerHTML='<div id="page-workspace"><div id="w-body"></div></div>';
       if(model){if(!sel.wsrc&&model.wsrcs&&model.wsrcs.length)sel.wsrc=model.wsrcs[0];renderWorkspace();initSortables();}
+    }else if(k==='central'){
+      panel.innerHTML='<div id="cp-body"></div>';
+      if(model&&typeof renderCentral==='function')renderCentral();
+      else panel.innerHTML='<div class="empty"><i class="ti ti-layout-dashboard"></i>อัปโหลดไฟล์ก่อนเพื่อดูสรุปวางแผนกลาง</div>';
     }else if(k==='motion'){
       panel.innerHTML='<div id="mo-body"></div>';
       if(model&&typeof renderMotion==='function'){syncDayFromCal();renderMotion();}
@@ -4705,6 +5006,8 @@ const SPEC_HOL={"โรงชำแหละสุกรแปดริ้ว": 
   // roles: planner fills data via the calendar (จ·อ·พ); AI-admin checks then generates (พฤ)
   function applyRole(role){
     curRole=role;
+    // ทีมวางแผนกลางเปิดมาที่หน้าสรุปก่อน · บทบาทอื่นไม่เห็นแท็บนี้
+    if(role==='central')rdTab='central'; else if(rdTab==='central'&&role!=='admin')rdTab='motion';
     document.querySelectorAll('#iwRoleSwitch button').forEach(x=>x.classList.toggle('on',x.dataset.role===role));
     // nav is the same for both (รอบวางแผน + result pages); role behaviour lives inside the calendar
     const lb=q('iwLabelBack'); if(lb)lb.classList.remove('iw-hidden');
