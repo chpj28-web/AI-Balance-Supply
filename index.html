@@ -997,7 +997,8 @@ tr.rd-rowpend td:first-child{box-shadow:inset 3px 0 0 var(--bad)}
 .cp-wi .t{font-size:12.5px;font-weight:700;color:var(--text);line-height:1.3}
 .cp-wi .d{font-size:11.5px;color:var(--text2);margin-top:2px;line-height:1.4}
 .cp-empty{font-size:12.5px;color:var(--text3);padding:14px;text-align:center}
-.cp-mx td.cell{font-weight:700;text-align:center}
+.cp-mx td.cp-cell{display:table-cell;font-weight:700;text-align:center;padding:8px 6px;border:none;border-bottom:1px solid var(--hairline);border-radius:0;height:auto;width:auto;min-width:0;box-shadow:none}
+.cp-mx th.cp-mxh{text-align:center}
 .cp-note{font-size:11.5px;color:var(--text3);margin:8px 0 0}
 .cp-mhead{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;padding-right:40px;flex-wrap:wrap}
 .cp-mhead h3{margin:0;display:flex;align-items:center;gap:8px}
@@ -2719,7 +2720,7 @@ function cpChannelView(rows,T){
   // ภาค × ช่องทาง (หรือ โรงงาน × ช่องทาง เมื่อเลือกภาคเดียว)
   const single=cpRegion!=='all';
   const mRows=single?cpSortRows(rows.slice()).map(r=>({lb:r.name,a:r,idx:r.idx})):cpRegions().map(rg=>({lb:rg,a:rows.filter(r=>r.region===rg).reduce((x,r)=>cpAdd(x,r),cpBlank())}));
-  const cell=x=>{const v=cpVdp(x.fc,x.qt);if(v==null)return '<td class="cell"><span class="sub">—</span></td>';const bg=v<CP_RULES.vdpBad?'var(--bad-bg)':v<CP_RULES.vdpWarn?'var(--warn-bg)':'var(--ok-bg)';return `<td class="cell" style="background:${bg}" title="FC ${cpFmt(x.fc)} · QT ${cpFmt(x.qt)}">${cpVdpHtml(v)}</td>`;};
+  const cell=x=>{const v=cpVdp(x.fc,x.qt);if(v==null)return '<td class="cp-cell"><span class="sub">—</span></td>';const bg=v<CP_RULES.vdpBad?'var(--bad-bg)':v<CP_RULES.vdpWarn?'var(--warn-bg)':'var(--ok-bg)';return `<td class="cp-cell" style="background:${bg}" title="FC ${cpFmt(x.fc)} · QT ${cpFmt(x.qt)}">${cpVdpHtml(v)}</td>`;};
   const t2=`<div class="tblwrap"><table class="tbl cp-tbl2 cp-mx" style="min-width:620px"><thead><tr><th class="stk">${single?'โรงงาน':'ภาค'}</th>${CP_CH.map(c=>`<th style="text-align:center">${CH_LABEL[c]||c}</th>`).join('')}<th style="text-align:center">รวม</th></tr></thead><tbody>${mRows.map(m=>`<tr${m.idx!=null?` style="cursor:pointer" onclick="cpOpenFac(${m.idx})"`:''}><td class="stk">${m.lb}</td>${CP_CH.map(c=>cell(m.a.ch[c])).join('')}${cell(m.a)}</tr>`).join('')}</tbody></table></div>`;
   return t1+`<h4 style="margin:16px 0 0;font-size:13.5px">%VDP ${single?'รายโรงงาน':'รายภาค'} × ช่องทาง</h4><p class="cp-note" style="margin:2px 0 0">ช่องสี: แดง &lt; ${CP_RULES.vdpBad}% · เหลือง &lt; ${CP_RULES.vdpWarn}% · เขียว ≥ ${CP_RULES.vdpWarn}% · ชี้ที่ช่องเพื่อดู FC/QT</p>`+t2;
 }
