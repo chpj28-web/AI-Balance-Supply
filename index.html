@@ -1013,6 +1013,11 @@ tr.rd-rowpend td:first-child{box-shadow:inset 3px 0 0 var(--bad)}
 .cp-msec{margin-top:14px}
 .cp-msec h4{margin:0 0 4px;font-size:13.5px;display:flex;align-items:center;gap:6px}
 .cp-tbl2{min-width:760px;table-layout:auto}
+.cp-hin{width:84px;padding:4px 6px;border:1px solid var(--border2);border-radius:7px;background:var(--surface);color:var(--text);font:inherit;font-weight:700;text-align:right;font-variant-numeric:tabular-nums}
+.cp-hin:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-bg)}
+.cp-hd{font-size:10.5px;line-height:1.2;min-height:0}
+.cp-editbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:10px}
+.cp-editbar .sub{font-size:11.5px}
 .cp-coll>summary{list-style:none;cursor:pointer;user-select:none;border:1px solid var(--border);border-radius:11px;padding:9px 12px;background:var(--surface)}
 .cp-coll>summary::-webkit-details-marker{display:none}
 .cp-coll>summary:hover{border-color:var(--accent-dim);background:var(--accent-bg)}
@@ -2774,7 +2779,45 @@ function cpGroupView(){
 // เนื้อหารายละเอียดโรงงาน (KPI · รายวันทั้งสัปดาห์ · ช่องทาง · กลุ่มสินค้า) — ใช้ร่วมกันทั้งวางแผนกลางและวางแผนโรงงาน
 // names: รายชื่อโรงงาน (null = ทุกโรงงาน) · days: ขอบเขตวันของ KPI · hiDay: วันที่ไฮไลต์ในตารางรายวัน
 const cpCollOpen={ch:false,grp:false};
-function cpFacDetailHtml(names,days,hiDay,collapsible){
+// ── แก้หัวเชือดรายวันใน popup โรงงาน (วางแผนกลาง) → ยืนยันแล้วเข้า simOverrides ชุดเดียวกับแท็บปรับกำลังการผลิต ──
+let cpHeadDraft={};
+function cpDayEditable(gd){return simNoon!=='after'&&simGenerated(gd,gToday)&&gToday>=simReviewDay(gd)&&(gd-gToday>=3);}
+function cpEditCtx(name,dA){
+  const W=dA.reduce((s,x)=>cpAdd(s,x),cpBlank()),avgWt=W.heads?W.wt/W.heads:100,avgPh=W.heads?W.prod/W.heads:0;
+  const rows=model.days.map((d,di)=>{const gd=di,sh=simHeads(name,gd),k=name+'__'+gd,x=dA[di];
+    const cur=cpHeadDraft[k]!=null?cpHeadDraft[k]:(simOverrides[k]!=null?simOverrides[k]:sh.heads);
+    return {di,gd,k,sh,x,ok:cpDayEditable(gd),cap:gToday===simReviewDay(gd)?sh.max:sh.heads,cur,
+      wtPh:x.heads?x.wt/x.heads:avgWt,ph:sh.perHead||(x.heads?x.prod/x.heads:avgPh)};});
+  return window.__cpEdit={name,rows};
+}
+function cpEditVals(r){return {heads:r.cur,min:r.x.min,max:r.x.max,wt:r.cur*r.wtPh,prod:r.cur*r.ph};}
+function cpEditDeltaHtml(r){const d=r.cur-r.sh.heads;return d?`<span class="${d>0?'pos':'neg'}">${d>0?'+':''}${nf.format(d)} จากแผน AI</span>`:'';}
+function cpEditN(){const E=window.__cpEdit;return E?E.rows.filter(r=>r.cur!==r.sh.heads).length:0;}
+function cpEditHead(di,val){
+  const E=window.__cpEdit;if(!E)return;const r=E.rows[di];if(!r||!r.ok)return;
+  let v=Math.round(parseFloat(val));if(!isFinite(v))v=r.cur;v=Math.max(r.sh.min,Math.min(r.cap,v));
+  r.cur=v;cpHeadDraft[r.k]=v;
+  const m=document.getElementById('modal'),q=sel=>m.querySelector('[data-cpe="'+sel+'"]'),set=(sel,h)=>{const e=q(sel);if(e)e.innerHTML=h;};
+  const inp=q('in-'+di);if(inp&&+inp.value!==v)inp.value=v;
+  const x=cpEditVals(r);
+  set('cap-'+di,cpCapHtml(x));set('wt-'+di,cpNum(x.wt));set('prod-'+di,cpNum(x.prod));set('d-'+di,cpEditDeltaHtml(r));
+  const T={heads:0,min:0,max:0,wt:0,prod:0};E.rows.forEach(rr=>{const y=cpEditVals(rr);T.heads+=y.heads;T.min+=y.min;T.max+=y.max;T.wt+=y.wt;T.prod+=y.prod;});
+  set('tot-heads',nf.format(T.heads));set('tot-cap',cpCapHtml(T));set('tot-wt',cpNum(T.wt));set('tot-prod',cpNum(T.prod));
+  set('n',cpEditN());
+}
+function cpEditReset(){
+  const E=window.__cpEdit;if(!E)return;
+  E.rows.forEach(r=>{delete cpHeadDraft[r.k];delete simOverrides[r.k];});
+  const m=document.getElementById('modal'),st=m.scrollTop;cpOpenFac(cpFacIdx);m.scrollTop=st;
+  toast('กลับเป็นแผน AI ของ '+E.name+' แล้ว');
+}
+function cpEditConfirm(){
+  const E=window.__cpEdit;if(!E)return;
+  E.rows.forEach(r=>{if(!r.ok)return;if(r.cur===r.sh.heads)delete simOverrides[r.k];else simOverrides[r.k]=r.cur;delete cpHeadDraft[r.k];});
+  if(!Object.keys(simOverrides).length){toast('ยังไม่มีการปรับหัวเชือด');return;}
+  simReplan();
+}
+function cpFacDetailHtml(names,days,hiDay,collapsible,editable){
   const u=cpU(),ns=names?new Set(names):null;
   const sec=(k,ic,t,body)=>collapsible
     ?`<details class="cp-msec cp-coll"${cpCollOpen[k]?' open':''} ontoggle="cpCollOpen['${k}']=this.open;this.querySelector('.cp-collhint').textContent=this.open?'กดเพื่อซ่อน':'กดเพื่อดู'"><summary><h4><i class="ti ti-${ic}" style="color:var(--accent)"></i> ${t}<span class="cp-collhint">${cpCollOpen[k]?'กดเพื่อซ่อน':'กดเพื่อดู'}</span><i class="ti ti-chevron-right cp-collchev"></i></h4></summary>${body}</details>`
@@ -2784,12 +2827,18 @@ function cpFacDetailHtml(names,days,hiDay,collapsible){
   const mk=(lab,val,s)=>`<div class="cp-mk"><div class="lab">${lab}</div><div class="val">${val}</div><div class="s">${s||''}</div></div>`;
   // รายวัน (แสดงทุกวันของสัปดาห์ ไฮไลต์วันที่เลือก)
   const dA=model.days.map(d=>sumOf(cpAgg([d])));
+  const E=editable&&names&&names.length===1?cpEditCtx(names[0],dA):null;
   const dayRows=model.days.map((d,di)=>{const x=dA[di];
     const t=new Date(d+'T00:00:00'),lb=isNaN(t)?dlabel(d):DOWFULL[(t.getDay()+6)%7]+' '+t.getDate()+' '+TH_MON[t.getMonth()];
+    if(E){const r=E.rows[di],y=cpEditVals(r);
+      const hc=r.ok?`<input type="number" class="cp-hin" data-cpe="in-${di}" min="${r.sh.min}" max="${r.cap}" step="1" value="${r.cur}" title="แก้ได้ ${nf.format(r.sh.min)}–${nf.format(r.cap)} ตัว" onfocus="this.select()" onchange="cpEditHead(${di},this.value)" onkeydown="if(event.key==='Enter')this.blur()"><div class="cp-hd" data-cpe="d-${di}">${cpEditDeltaHtml(r)}</div>`
+        :`<span title="ล็อก — แก้ได้เฉพาะวันที่เปิดให้ปรับ (Day+3 ก่อน 12:00)"><i class="ti ti-lock" style="color:var(--text3);font-size:12px"></i> ${nf.format(x.heads)}</span>`;
+      return `<tr class="${hiDay===d?'on':''}"><td class="stk">${lb}</td><td>${hc}</td><td>${x.max?nf.format(x.min)+'–'+nf.format(x.max):'—'}</td><td data-cpe="cap-${di}">${cpCapHtml(y)}</td><td data-cpe="wt-${di}">${cpNum(y.wt)}</td><td data-cpe="prod-${di}">${cpNum(y.prod)}</td><td>${cpNum(x.fc)}</td><td>${cpNum(x.qt)}</td><td>${cpVdpHtml(cpVdp(x.fc,x.qt))}</td><td class="${x.short>0?'neg':''}">${cpNum(x.short)}</td><td>${cpNum(x.left)}</td></tr>`;}
     return `<tr class="${hiDay===d?'on':''}"><td class="stk">${lb}</td><td>${nf.format(x.heads)}</td><td>${x.max?nf.format(x.min)+'–'+nf.format(x.max):'—'}</td><td>${cpCapHtml(x)}</td><td>${cpNum(x.wt)}</td><td>${cpNum(x.prod)}</td><td>${cpNum(x.fc)}</td><td>${cpNum(x.qt)}</td><td>${cpVdpHtml(cpVdp(x.fc,x.qt))}</td><td class="${x.short>0?'neg':''}">${cpNum(x.short)}</td><td>${cpNum(x.left)}</td></tr>`;}).join('');
   const W2=dA.reduce((s,x)=>cpAdd(s,x),cpBlank());W2.left=dA[dA.length-1].left;
+  if(E){W2.heads=0;W2.wt=0;W2.prod=0;E.rows.forEach(r=>{const y=cpEditVals(r);W2.heads+=y.heads;W2.wt+=y.wt;W2.prod+=y.prod;});}
   const dayTbl=`<div class="tblwrap"><table class="tbl cp-tbl2" style="min-width:900px"><thead><tr><th class="stk">วัน</th><th>หัวเชือด</th><th>min–max</th><th>ใช้ cap</th><th>น้ำหนักเข้า</th><th>ผลิต</th><th>FC</th><th>QT</th><th>%VDP</th><th>ขาด</th><th>เหลือ</th></tr></thead><tbody>${dayRows}</tbody>
-    <tfoot><tr><td class="stk">รวมสัปดาห์</td><td>${nf.format(W2.heads)}</td><td>${nf.format(W2.min)}–${nf.format(W2.max)}</td><td>${cpCapHtml(W2)}</td><td>${cpNum(W2.wt)}</td><td>${cpNum(W2.prod)}</td><td>${cpNum(W2.fc)}</td><td>${cpNum(W2.qt)}</td><td>${cpVdpHtml(cpVdp(W2.fc,W2.qt))}</td><td class="neg">${cpNum(W2.short)}</td><td>${cpNum(W2.left)}</td></tr></tfoot></table></div>`;
+    <tfoot><tr><td class="stk">รวมสัปดาห์</td><td data-cpe="tot-heads">${nf.format(W2.heads)}</td><td>${nf.format(W2.min)}–${nf.format(W2.max)}</td><td data-cpe="tot-cap">${cpCapHtml(W2)}</td><td data-cpe="tot-wt">${cpNum(W2.wt)}</td><td data-cpe="tot-prod">${cpNum(W2.prod)}</td><td>${cpNum(W2.fc)}</td><td>${cpNum(W2.qt)}</td><td>${cpVdpHtml(cpVdp(W2.fc,W2.qt))}</td><td class="neg">${cpNum(W2.short)}</td><td>${cpNum(W2.left)}</td></tr></tfoot></table></div>`;
   const chTbl=`<div class="tblwrap"><table class="tbl cp-tbl2" style="min-width:520px"><thead><tr><th class="stk">ช่องทาง</th><th>FC (${u})</th><th>QT (${u})</th><th>%VDP</th><th>ขาด (${u})</th></tr></thead><tbody>${CP_CH.map(c=>{const x=a.ch[c];return `<tr><td class="stk">${CH_LABEL[c]||c}</td><td>${cpNum(x.fc)}</td><td>${cpNum(x.qt)}</td><td>${cpVdpHtml(cpVdp(x.fc,x.qt))}</td><td class="${x.fc-x.qt>0?'neg':''}">${cpNum(Math.max(0,x.fc-x.qt))}</td></tr>`;}).join('')}</tbody></table></div>`;
   return `${fl.length?`<div style="display:flex;flex-direction:column;gap:6px;margin-top:10px">${fl.map(x=>`<div class="cp-wi" style="cursor:default"><div class="ic ${x.lv}"><i class="ti ti-${x.ic}"></i></div><div><div class="t">${x.t}</div><div class="d">${x.d}</div></div></div>`).join('')}</div>`:''}
     <div class="cp-mkpis">
@@ -2802,7 +2851,9 @@ function cpFacDetailHtml(names,days,hiDay,collapsible){
       ${mk('%VDP',v==null?'—':cpVdpHtml(v),'Main '+(cpVdp(a.mFc,a.mQt)==null?'—':nf1.format(cpVdp(a.mFc,a.mQt))+'%')+' · By '+(cpVdp(a.bFc,a.bQt)==null?'—':nf1.format(cpVdp(a.bFc,a.bQt))+'%'))}
       ${mk('ขาด / เหลือ','<span class="neg">'+cpNum(a.short)+'</span> / '+cpNum(a.left)+' <span class="sub" style="font-size:11px">'+u+'</span>','เหลือ = ปลายช่วง')}
     </div>
-    <div class="cp-msec"><h4><i class="ti ti-calendar-stats" style="color:var(--accent)"></i> รายวันทั้งสัปดาห์ (${u})</h4>${dayTbl}</div>
+    <div class="cp-msec"><h4><i class="ti ti-calendar-stats" style="color:var(--accent)"></i> รายวันทั้งสัปดาห์ (${u})</h4>${dayTbl}${E?(E.rows.some(r=>r.ok)
+      ?`<div class="cp-editbar"><span class="sub">แก้ช่องหัวเชือดได้เฉพาะวันที่เปิดให้ปรับ · น้ำหนักเข้า/ผลิตคำนวณตามหัวเชือดใหม่ · FC/QT/%VDP จะอัปเดตหลัง AI วางแผนใหม่</span><span style="display:flex;gap:8px"><button class="cp-btn" onclick="cpEditReset()"><i class="ti ti-rotate"></i> กลับเป็นแผน AI</button><button class="btn primary" onclick="cpEditConfirm()"><i class="ti ti-check"></i> Confirm ปรับหัวเชือด (<span data-cpe="n">${cpEditN()}</span> วัน)</button></span></div>`
+      :`<div class="cp-editbar"><span class="sub"><i class="ti ti-lock"></i> สัปดาห์นี้ไม่มีวันที่แก้หัวเชือดได้แล้ว (ล็อก Day+0..+2 / เลย 12:00)</span></div>`):''}</div>
     ${sec('ch','users-group','แยกช่องทาง',chTbl)}
     ${sec('grp','layout-grid','แยกกลุ่มสินค้า',cpGroupTable(cpGroupAgg(names,days)))}`;
 }
@@ -2818,7 +2869,7 @@ function cpOpenFac(idx){
   m.innerHTML=`<button onclick="closeOverlay()" aria-label="ปิด" style="position:absolute;top:12px;right:12px;width:32px;height:32px;border:none;border-radius:8px;background:var(--surface2);color:var(--text2);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center"><i class="ti ti-x"></i></button>
     <div class="cp-mhead"><div><h3><i class="ti ti-building-factory-2" style="color:var(--accent)"></i> ${f.name}</h3><p class="sub" style="margin:3px 0 0"><span class="chip info">${f.region||'ไม่ระบุ'}</span> · ${cpScopeLabel()}</p></div>
       <div style="display:flex;gap:6px;flex-wrap:wrap">${nav(prev,'chevron-left','ก่อนหน้า')}${nav(next,'chevron-right','ถัดไป')}<button class="cp-btn" onclick="showFacSkuModal('${dashEsc(f.name)}','${cpDay}')"><i class="ti ti-list-details"></i> ดูราย SKU</button></div></div>
-    ${cpFacDetailHtml([f.name],days,cpDay)}`;
+    ${cpFacDetailHtml([f.name],days,cpDay,false,true)}`;
   document.getElementById('overlay').classList.add('show');
   m.scrollTop=0;
 }
