@@ -6481,6 +6481,10 @@ function moRunLoad(){
   const PUBLIC_ACCOUNT={name:'ผู้ใช้',role:'admin',factory:null};
   window.doLogout=function(){ applyAccount(PUBLIC_ACCOUNT); };
   applyAccount(PUBLIC_ACCOUNT);
+  // เปิดเว็บมาที่หน้าทีมวางแผนกลางก่อน
+  // รอให้ _init ของ IW (DOMContentLoaded) ตั้งค่าเริ่มต้นก่อน แล้วค่อยสลับ
+  (function(){ const go=()=>{ const b=document.querySelector('#iwRoleSwitch button[data-role="central"]'); if(b)b.click(); };
+    if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go); else go(); })();
 })();
 </script>
 </body>
